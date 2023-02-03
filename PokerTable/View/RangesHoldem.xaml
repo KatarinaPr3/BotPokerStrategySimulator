@@ -1,0 +1,243 @@
+﻿<UserControl x:Class="PokerTable.View.RangesHoldem"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:viewModel="clr-namespace:PokerTable.ViewModel"
+             xmlns:local="clr-namespace:PokerTable.View"
+             mc:Ignorable="d" 
+             x:Name="RangeParent"
+             d:DesignHeight="850" Width="150">
+    <UserControl.Resources>
+        <viewModel:RangeGridViewModel x:Key="rParent" />
+    </UserControl.Resources>
+    <Grid Margin="5 5" 
+          DataContext="{Binding ElementName=RangeParent}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="10"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="550"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <DataGrid BorderBrush="Transparent" 
+                  ItemsSource="{Binding RangeListHoldem, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                  AutoGenerateColumns="False" 
+                  VerticalAlignment="Top" 
+                  Grid.Row="0" 
+                  Grid.Column="0" 
+                  Grid.ColumnSpan="2" 
+                  Padding="0" 
+                  Width="90" 
+                  GridLinesVisibility="None" 
+                  HeadersVisibility="None">
+            <DataGrid.Columns >
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate >
+                            <StackPanel HorizontalAlignment="Center" 
+                                        Orientation="Horizontal">
+                                <Image Margin="4 0" 
+                                       Height="25" 
+                                       Source="{Binding Img1}"/>
+                                <Image Margin="4 0" 
+                                       Height="25" 
+                                       Source="{Binding Img2}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate >
+                            <StackPanel Width="10" 
+                                        Height="25" 
+                                        Margin="-2 0" 
+                                        Background="{Binding BrushTxt, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <ListView VerticalAlignment="Top" 
+                  Visibility="{Binding VisibilityHoldemOrOmaha}" 
+                  Grid.Row="0" 
+                  Grid.Column="0" 
+                  Grid.ColumnSpan="2" 
+                  ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
+                  Margin="0"
+                  Padding="0" 
+                  Width="{Binding WidthHoldemAndOmaha}"
+                  BorderBrush="Transparent" 
+                  BorderThickness="0" >
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="Margin" 
+                            Value="0"/>
+                    <Setter Property="Padding" 
+                            Value="0"/>
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.Style>
+                <Style TargetType="ListView">
+                    <Setter Property="Margin" 
+                            Value="0"/>
+                    <Setter Property="Padding" 
+                            Value="0"/>
+                    <Setter Property="BorderThickness" 
+                            Value="0"/>
+                </Style>
+            </ListView.Style>
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView ItemsSource="{Binding  Path=ImageSources1, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                      ScrollViewer.CanContentScroll="False" 
+                      PresentationTraceSources.TraceLevel="High">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="BorderThickness" 
+                                Value="0"/>
+                        <Setter Property="Margin" 
+                                Value="1"/>
+                        <Setter Property="Padding" 
+                                Value="0"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.Style>
+                    <Style TargetType="ListView">
+                        <Setter Property="BorderThickness" 
+                                Value="0"/>
+                    </Style>
+                </ListView.Style>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Image Height="25" 
+                               Source="{Binding}"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <ListView ItemsSource="{Binding Path=ImageSources2, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                      ScrollViewer.CanContentScroll="False" 
+                      PresentationTraceSources.TraceLevel="High">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="BorderThickness" 
+                                Value="0"/>
+                        <Setter Property="Margin" 
+                                Value="1"/>
+                        <Setter Property="Padding" 
+                                Value="0"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.Style>
+                    <Style TargetType="ListView">
+                        <Setter Property="BorderThickness" 
+                                Value="0"/>
+                    </Style>
+                </ListView.Style>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Image Height="25" 
+                               Source="{Binding}"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <ListView ItemsSource="{Binding Path=ImageSources3, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                      ScrollViewer.CanContentScroll="False" 
+                      PresentationTraceSources.TraceLevel="High">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="BorderThickness" 
+                                Value="0"/>
+                        <Setter Property="Margin" 
+                                Value="1"/>
+                        <Setter Property="Padding" 
+                                Value="0"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.Style>
+                    <Style TargetType="ListView">
+                        <Setter Property="BorderThickness" 
+                                Value="0"/>
+                    </Style>
+                </ListView.Style>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Image Height="25" 
+                               Source="{Binding}"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <ListView ItemsSource="{Binding Path=ImageSources4, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                      ScrollViewer.CanContentScroll="False" PresentationTraceSources.TraceLevel="High">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="BorderThickness" 
+                                Value="0"/>
+                        <Setter Property="Margin" 
+                                Value="1"/>
+                        <Setter Property="Padding" 
+                                Value="0"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.Style>
+                    <Style TargetType="ListView">
+                        <Setter Property="BorderThickness" 
+                                Value="0"/>
+                    </Style>
+                </ListView.Style>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Image Height="25" 
+                               Source="{Binding}"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </ListView>
+        <Border Grid.Column="0" 
+                Grid.ColumnSpan="3" 
+                Grid.RowSpan="2" 
+                VerticalAlignment="Top" 
+                Grid.Row="2" 
+                Margin="3" 
+                BorderThickness="2" 
+                CornerRadius="5" 
+                BorderBrush="Black" 
+                MinHeight="215" 
+                MaxHeight="215">
+            <DataGrid ItemsSource="{Binding RangeList, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                      AutoGenerateColumns="False" 
+                      Background="White" 
+                      HeadersVisibility="None" 
+                      GridLinesVisibility="None">
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn >
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock FontSize="12" 
+                                           Text="{Binding RangeName}" 
+                                           Foreground="{Binding BrushTxt}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn >
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock FontSize="12" 
+                                           Text="{Binding Percentage}" 
+                                           Foreground="{Binding BrushTxt}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Border>
+    </Grid>
+</UserControl>

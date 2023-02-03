@@ -1,0 +1,141 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="PokerTable.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="Player1Balance" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">100</Value>
+    </Setting>
+    <Setting Name="Player1Name" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Ana1</Value>
+    </Setting>
+    <Setting Name="Player1StrategyProfile" Type="System.String" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="Player2Balance" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">200</Value>
+    </Setting>
+    <Setting Name="Player2Name" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Milena</Value>
+    </Setting>
+    <Setting Name="Player2StrategyProfile" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Strategija2</Value>
+    </Setting>
+    <Setting Name="Player3Balance" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="Player3Name" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="Player3StrategyProfile" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Regular1</Value>
+    </Setting>
+    <Setting Name="Player4Balance" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="Player4Name" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="Player4StrategyProfile" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Regular1</Value>
+    </Setting>
+    <Setting Name="Player5Balance" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="Player5Name" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="Player5StrategyProfile" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Regular1</Value>
+    </Setting>
+    <Setting Name="Player6Balance" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="Player6Name" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="Player6StrategyProfile" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Regular1</Value>
+    </Setting>
+    <Setting Name="Player7Balance" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="Player7Name" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="Player7StrategyProfile" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Regular1</Value>
+    </Setting>
+    <Setting Name="Player8Balance" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="Player8Name" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="Player8StrategyProfile" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Regular1</Value>
+    </Setting>
+    <Setting Name="Player9Balance" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="Player9Name" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="Player9StrategyProfile" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Regular1</Value>
+    </Setting>
+    <Setting Name="NumberOfPlayers" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="BigBlind" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="Delay" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">2000</Value>
+    </Setting>
+    <Setting Name="thresholdRebuy" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">20</Value>
+    </Setting>
+    <Setting Name="GameChoosen" Type="System.String" Scope="User">
+      <Value Profile="(Default)">NLH</Value>
+    </Setting>
+    <Setting Name="NumShowHandsChoosen" Type="System.String" Scope="User">
+      <Value Profile="(Default)">100</Value>
+    </Setting>
+    <Setting Name="Player1IsBot" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="Player2IsBot" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="Player3IsBot" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="Player4IsBot" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="Player5IsBot" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="Player6IsBot" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="Player7IsBot" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="Player8IsBot" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="Player9IsBot" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="IsGeneratedChecked" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="SelectedEnumCasino" Type="DBLib.EnumCasino" Scope="User">
+      <Value Profile="(Default)">PPPoker</Value>
+    </Setting>
+    <Setting Name="connString" Type="System.String" Scope="User">
+      <Value Profile="(Default)">n</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

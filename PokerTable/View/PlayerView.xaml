@@ -1,0 +1,483 @@
+﻿<UserControl x:Class="PokerTable.View.PlayerView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mainWinVM="clr-namespace:PokerTable.ViewModel"
+             xmlns:local="clr-namespace:PokerTable.View"
+             xmlns:VM="clr-namespace:PokerTable.ViewModel"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+             x:Name="parent"
+             mc:Ignorable="d" 
+             d:DesignHeight="120" d:DesignWidth="100">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </UserControl.Resources>
+    <UserControl.Triggers>
+        <EventTrigger RoutedEvent="Loaded">
+            <BeginStoryboard>
+                <Storyboard>
+                    <DoubleAnimation From="0" 
+                                     To="1" 
+                                     Duration="0:0:2" 
+                                     Storyboard.TargetProperty="Opacity">
+                    </DoubleAnimation>
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+    </UserControl.Triggers>
+    <Grid Margin="1 0" 
+          Visibility="{Binding IsVisibleBool, Converter={StaticResource BooleanToVisibilityConverter}}" 
+          Name="gridProfile" 
+          DataContext="{Binding ElementName=parent}">
+        <Grid.Style>
+            <Style TargetType="{x:Type Grid}">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding Path=VisibilityCardsInView}" 
+                                 Value="Collapsed">
+                        <DataTrigger.EnterActions>
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetProperty='Opacity' 
+                                                     From='1' 
+                                                     To='0.5' 
+                                                     Duration='0:0:1' />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </DataTrigger.EnterActions>
+                        <DataTrigger.ExitActions>
+                            <BeginStoryboard>
+                                <Storyboard FillBehavior='Stop'>
+                                    <DoubleAnimation Storyboard.TargetProperty='Opacity' 
+                                                     To='1' 
+                                                     Duration='0:0:1' />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </DataTrigger.ExitActions>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </Grid.Style>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="{Binding WidthOfColumn}"/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="{Binding WidthOfColumn}"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Row="0" 
+                    Grid.Column="0"
+                    Grid.RowSpan="3" 
+                    Grid.ColumnSpan="3" 
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center">
+            <Border Width="90"
+                    Height="90"
+                    x:Name="myAnimation">
+                <Border.Background>
+                    <SolidColorBrush Color="White"/>
+                </Border.Background>
+                <Border.Effect>
+                    <BlurEffect Radius="0" 
+                                x:Name="blurEffect"/>
+                </Border.Effect>
+
+                <Border.Style>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" 
+                                Value="45"/>
+                        <!--#region Animation-->
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Path=IsMyTurn, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                                         Value="True">
+                                <DataTrigger.EnterActions>
+                                    <BeginStoryboard x:Name="storyb1">
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetProperty="(Effect).(Radius)" 
+                                                             From="0" 
+                                                             To="15" 
+                                                             Duration="0:0:5"/>
+                                            <ThicknessAnimation Duration="0:0:0.450"
+                                                                To="2" 
+                                                                Storyboard.TargetProperty="BorderThickness"/>
+                                            <DoubleAnimation Duration="0:0:0.300" 
+                                                             To="100" 
+                                                             Storyboard.TargetProperty="Height"/>
+                                            <DoubleAnimation Duration="0:0:0.300" 
+                                                             To="100" 
+                                                             Storyboard.TargetProperty="Width"/>
+                                            <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                                          Duration="0:0:5"
+                                                                          FillBehavior="HoldEnd" 
+                                                                          RepeatBehavior="0:0:5">
+                                                <ColorAnimationUsingKeyFrames.KeyFrames>
+                                                    <DiscreteColorKeyFrame KeyTime="0:0:0" 
+                                                                           Value="Green"/>
+                                                    <DiscreteColorKeyFrame KeyTime="0:0:5" 
+                                                                           Value="Green"/>
+                                                    <DiscreteColorKeyFrame KeyTime="0:0:5" 
+                                                                           Value="Green"/>
+                                                </ColorAnimationUsingKeyFrames.KeyFrames>
+                                            </ColorAnimationUsingKeyFrames>
+                                            <DoubleAnimation Storyboard.TargetProperty="Opacity" 
+                                                             From="1" 
+                                                             To="0.5" 
+                                                             Duration="0:0:2" 
+                                                             BeginTime="0:0:0.1" />
+                                            <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                             From="0.5" 
+                                                             To="1" 
+                                                             Duration="0:0:0.2" 
+                                                             BeginTime="0:0:1.4" />
+                                            <DoubleAnimation Storyboard.TargetProperty="Opacity" 
+                                                             From="1" 
+                                                             To="0.7" 
+                                                             Duration="0:0:0.2" 
+                                                             BeginTime="0:0:2" />
+                                            <DoubleAnimation Storyboard.TargetProperty="Opacity" 
+                                                             From="0.5" 
+                                                             To="1" 
+                                                             Duration="0:0:0.2" 
+                                                             BeginTime="0:0:2.5" />
+                                            <DoubleAnimation Storyboard.TargetProperty="Opacity" 
+                                                             From="1" 
+                                                             To="0.5" 
+                                                             Duration="0:0:2" 
+                                                             BeginTime="0:0:3" />
+                                            <DoubleAnimation Storyboard.TargetProperty="Opacity" 
+                                                             From="0.5"
+                                                             To="1" 
+                                                             Duration="0:0:0.2" 
+                                                             BeginTime="0:0:3.4" />
+                                            <DoubleAnimation Storyboard.TargetProperty="Opacity" 
+                                                             From="1" 
+                                                             To="0.7" 
+                                                             Duration="0:0:0.2" 
+                                                             BeginTime="0:0:4" />
+                                            <DoubleAnimation Storyboard.TargetProperty="Opacity" 
+                                                             From="0.5" 
+                                                             To="1" 
+                                                             Duration="0:0:0.2" 
+                                                             BeginTime="0:0:4.5" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </DataTrigger.EnterActions>
+                                <DataTrigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetProperty="(Effect).(Radius)" 
+                                                             From="10" 
+                                                             To="0"/>
+                                            <DoubleAnimation Duration="0:0:0.150" 
+                                                             To="90" 
+                                                             Storyboard.TargetProperty="Height"/>
+                                            <DoubleAnimation Duration="0:0:0.150" 
+                                                             To="90" 
+                                                             Storyboard.TargetProperty="Width"/>
+                                            <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                      Duration="0:0:0:0.2"
+                                                      FillBehavior="HoldEnd" 
+                                                      RepeatBehavior="0:0:0:1">
+                                                <ColorAnimationUsingKeyFrames.KeyFrames>
+                                                    <DiscreteColorKeyFrame KeyTime="0:0:0:1" 
+                                                                           Value="White"/>
+                                                </ColorAnimationUsingKeyFrames.KeyFrames>
+                                            </ColorAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </DataTrigger.ExitActions>
+                            </DataTrigger>
+                        </Style.Triggers>
+                        <!--#endregion-->                    
+                    </Style>
+                </Border.Style>
+            </Border>
+        </StackPanel>
+        <Grid Grid.Row="0" 
+              Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+        </Grid>
+        <Border Grid.Row="1" 
+                Grid.Column="1" 
+                Background="White" 
+                Width="90" 
+                Height="90">
+            <Border.Style>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" 
+                            Value="45"/>
+                </Style>
+            </Border.Style>
+            <StackPanel >
+                <ContentControl>
+                    <ContentControl.InputBindings>
+                        <MouseBinding Gesture="LeftDoubleClick" 
+                                      Command="{Binding DoubleClickCommand}"/>
+                    </ContentControl.InputBindings>
+                    <StackPanel VerticalAlignment="Center" 
+                                HorizontalAlignment="Center" 
+                                Orientation="Horizontal">
+                        <Image Source="{Binding ImageSource1, UpdateSourceTrigger=PropertyChanged}" 
+                               Height="30">
+                            <Image.Style>
+                                <Style TargetType="{x:Type Image}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Path=VisibilityCardsInView, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Value="Collapsed">
+                                            <DataTrigger.EnterActions>
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <DoubleAnimation From="1" 
+                                                                         To="0.5" 
+                                                                         Duration="0:0:0.5" 
+                                                                         Storyboard.TargetProperty="Opacity"/>
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </DataTrigger.EnterActions>
+                                            <DataTrigger.ExitActions>
+                                                <BeginStoryboard>
+                                                    <Storyboard FillBehavior='Stop'>
+                                                        <DoubleAnimation Storyboard.TargetProperty='Opacity' 
+                                                                         To='1' 
+                                                                         Duration='0:0:1' />
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </DataTrigger.ExitActions>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Image.Style>
+                        </Image>
+                        <Image Source="{Binding ImageSource2, UpdateSourceTrigger=PropertyChanged}" 
+                               Height="30">
+                            <Image.Style>
+                                <Style TargetType="{x:Type Image}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Path=VisibilityCardsInView, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                                                     Value="Collapsed">
+                                            <DataTrigger.EnterActions>
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <DoubleAnimation From="1" 
+                                                                         To="0.5" 
+                                                                         Duration="0:0:0.5" 
+                                                                         Storyboard.TargetProperty="Opacity">
+                                                        </DoubleAnimation>
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </DataTrigger.EnterActions>
+                                            <DataTrigger.ExitActions>
+                                                <BeginStoryboard>
+                                                    <Storyboard FillBehavior='Stop'>
+                                                        <DoubleAnimation Storyboard.TargetProperty='Opacity' 
+                                                                         To='1' 
+                                                                         Duration='0:0:1' />
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </DataTrigger.ExitActions>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Image.Style>
+                        </Image>
+                        <Image Source="{Binding ImageSource3, UpdateSourceTrigger=PropertyChanged}" 
+                               Visibility="{Binding VisibilityOmaha, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                               Height="30">
+                            <Image.Style>
+                                <Style TargetType="{x:Type Image}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Path=VisibilityCardsInView, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                                                     Value="Collapsed">
+                                            <DataTrigger.EnterActions>
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <DoubleAnimation From="1" 
+                                                                         To="0.5" 
+                                                                         Duration="0:0:0.5" 
+                                                                         Storyboard.TargetProperty="Opacity">
+                                                        </DoubleAnimation>
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </DataTrigger.EnterActions>
+                                            <DataTrigger.ExitActions>
+                                                <BeginStoryboard>
+                                                    <Storyboard FillBehavior='Stop'>
+                                                        <DoubleAnimation Storyboard.TargetProperty='Opacity' 
+                                                                         To='1' 
+                                                                         Duration='0:0:1'/>
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </DataTrigger.ExitActions>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Image.Style>
+                        </Image>
+                        <Image Source="{Binding ImageSource4, UpdateSourceTrigger=PropertyChanged}" 
+                               Visibility="{Binding VisibilityOmaha, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                               Height="30">
+                            <Image.Style>
+                                <Style TargetType="{x:Type Image}">
+                                    <Style.Triggers>
+
+                                        <DataTrigger Binding="{Binding Path=VisibilityCardsInView, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                                                     Value="Collapsed">
+                                            <DataTrigger.EnterActions>
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <DoubleAnimation From="1" 
+                                                                         To="0.5" 
+                                                                         Duration="0:0:0.5" 
+                                                                         Storyboard.TargetProperty="Opacity">
+                                                        </DoubleAnimation>
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </DataTrigger.EnterActions>
+                                            <DataTrigger.ExitActions>
+                                                <BeginStoryboard>
+                                                    <Storyboard FillBehavior='Stop'>
+                                                        <DoubleAnimation Storyboard.TargetProperty='Opacity' 
+                                                                         To='1' 
+                                                                         Duration='0:0:1' />
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </DataTrigger.ExitActions>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Image.Style>
+                        </Image>
+                    </StackPanel>
+                </ContentControl>
+                <StackPanel Visibility="{Binding Path=IsVisibleBool}" 
+                            Width="100" 
+                            MinHeight="82" 
+                            Margin="0" 
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center">
+                    <StackPanel HorizontalAlignment="Center" 
+                                Orientation="Horizontal">
+                        <TextBox Text="{Binding Path=NameOfPlayer, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                                 FontWeight="Bold" 
+                                 FontSize="10" 
+                                 VerticalAlignment="Center" 
+                                 HorizontalAlignment="Center" 
+                                 Background="Transparent">
+                            <TextBox.BorderThickness>
+                                <Thickness Left="0" 
+                                           Right="0" 
+                                           Top="0" 
+                                           Bottom="0"/>
+                            </TextBox.BorderThickness>
+                        </TextBox>
+                    </StackPanel>
+                    <StackPanel x:Name="root" 
+                                Orientation="Horizontal" 
+                                VerticalAlignment="Center" 
+                                HorizontalAlignment="Center" 
+                                DataContext="{Binding Path=., RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:PlayerView}}}">
+                        <StackPanel.Resources>
+                            <Storyboard x:Key="sb">
+                                <DoubleAnimation 
+                                    Storyboard.TargetProperty="Balance" 
+                                    Duration="0:0:0.5">
+                                </DoubleAnimation>
+                            </Storyboard>
+                        </StackPanel.Resources>
+                        <TextBlock Text="{Binding Balance, StringFormat=#.##}" 
+                                   FontSize="12"/>
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+        <StackPanel Margin="0 0 0 5" 
+                    Grid.Row="{Binding Path=RowVisibilityDealer}" 
+                    Grid.Column="{Binding Path=ColumnVisibilityDealer}" 
+                    Orientation="Vertical" 
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center">
+            <Image Visibility="{Binding Path=DealerVisibility}" 
+                   Source="/Images/Slike/dealerLogo.png" Width="25"/>
+        </StackPanel>
+        
+        <StackPanel Grid.Row="{Binding RowVisibilityStats}" 
+                    Grid.Column="{Binding ColumnVisibilityStats}" 
+                    Orientation="Vertical" 
+                    HorizontalAlignment="{Binding HorizontalAlignmentStats}"
+                    VerticalAlignment="{Binding VerticalAlignmentStats}">
+            <Button BorderThickness="0" 
+                    Background="Transparent" 
+                    Command="{Binding ShowStatistic}">
+                <Image Source="stats.png"
+                       Height="26">
+                    <Image.Style>
+                        <Style TargetType="{x:Type Image}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Path=ClickedStats, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                                             Value="True">
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Image.Style>
+                </Image>
+            </Button>
+            <Button BorderThickness="0" 
+                    Background="Transparent" 
+                    Command="{Binding BotOrHuman, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                <Image Height="26" 
+                       Margin="0 10 0 0" 
+                       Source="{Binding ImageBotHuman, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+            </Button>
+        </StackPanel>
+        <StackPanel Margin="0 5 0 0" 
+                    Grid.Row="{Binding Path=RowVisibility}" 
+                    Grid.Column="{Binding Path=ColumnVisibility}" 
+                    Orientation="Horizontal" 
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center">
+            <!--<Image Visibility="{Binding Path=DealerVisibility}" Source="dealerLogo.png" Width="15"/>-->
+            <TextBlock VerticalAlignment="Center" 
+                       HorizontalAlignment="Center" 
+                       Text="{Binding Path=BetSize, StringFormat=0.##}" 
+                       Visibility="{Binding BetSizeVisibility}" 
+                       Foreground="White" 
+                       FontWeight="Bold"/>
+        </StackPanel>
+        <StackPanel Grid.Row="{Binding Path=RowVisibilityButton}" 
+                    Grid.Column="{Binding Path=ColumnVisibilityButton}" 
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center" >
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{Binding Action}" 
+                           FontSize="12" 
+                           Foreground="Red" 
+                           Background="White" 
+                           Width="50" 
+                           Height="18"
+                           VerticalAlignment="Center" 
+                           HorizontalAlignment="Center" 
+                           TextAlignment="Center"/>
+            </StackPanel>
+            <TextBlock Visibility="{Binding IsWinner, Converter={StaticResource BooleanToVisibilityConverter}}" 
+                       Margin="0 -20 0 0" 
+                       FontSize="16" 
+                       Grid.ColumnSpan="3" 
+                       VerticalAlignment="Center" 
+                       HorizontalAlignment="Center" 
+                       Background="White" 
+                       Text="WINNER" 
+                       Foreground="Red" 
+                       Padding="3 5"/>
+
+        </StackPanel>
+    </Grid>
+</UserControl>

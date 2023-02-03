@@ -1,0 +1,443 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>disable</Nullable>
+    <UseWPF>true</UseWPF>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Files\AllFlopCombos.txt" />
+    <None Remove="Images\imgs\dealerLogo.png" />
+    <None Remove="Images\imgs\iconBet.jpg" />
+    <None Remove="Images\imgs\pause.png" />
+    <None Remove="Images\imgs\poker-chip.png" />
+    <None Remove="Images\imgs\resume.png" />
+    <None Remove="Images\imgs\stats.png" />
+    <None Remove="Images\imgs\userpic.png" />
+    <None Remove="Images\Karte\card_2c.png" />
+    <None Remove="Images\Karte\card_2d.png" />
+    <None Remove="Images\Karte\card_2h.png" />
+    <None Remove="Images\Karte\card_2s.png" />
+    <None Remove="Images\Karte\card_3c.png" />
+    <None Remove="Images\Karte\card_3d.png" />
+    <None Remove="Images\Karte\card_3h.png" />
+    <None Remove="Images\Karte\card_3s.png" />
+    <None Remove="Images\Karte\card_4c.png" />
+    <None Remove="Images\Karte\card_4d.png" />
+    <None Remove="Images\Karte\card_4h.png" />
+    <None Remove="Images\Karte\card_4s.png" />
+    <None Remove="Images\Karte\card_5c.png" />
+    <None Remove="Images\Karte\card_5d.png" />
+    <None Remove="Images\Karte\card_5h.png" />
+    <None Remove="Images\Karte\card_5s.png" />
+    <None Remove="Images\Karte\card_6c.png" />
+    <None Remove="Images\Karte\card_6d.png" />
+    <None Remove="Images\Karte\card_6h.png" />
+    <None Remove="Images\Karte\card_6s.png" />
+    <None Remove="Images\Karte\card_7c.png" />
+    <None Remove="Images\Karte\card_7d.png" />
+    <None Remove="Images\Karte\card_7h.png" />
+    <None Remove="Images\Karte\card_7s.png" />
+    <None Remove="Images\Karte\card_8c.png" />
+    <None Remove="Images\Karte\card_8d.png" />
+    <None Remove="Images\Karte\card_8h.png" />
+    <None Remove="Images\Karte\card_8s.png" />
+    <None Remove="Images\Karte\card_9c.png" />
+    <None Remove="Images\Karte\card_9d.png" />
+    <None Remove="Images\Karte\card_9h.png" />
+    <None Remove="Images\Karte\card_9s.png" />
+    <None Remove="Images\Karte\card_Ac.png" />
+    <None Remove="Images\Karte\card_Ad.png" />
+    <None Remove="Images\Karte\card_Ah.png" />
+    <None Remove="Images\Karte\card_As.png" />
+    <None Remove="Images\Karte\card_Jc.png" />
+    <None Remove="Images\Karte\card_Jd.png" />
+    <None Remove="Images\Karte\card_Jh.png" />
+    <None Remove="Images\Karte\card_Js.png" />
+    <None Remove="Images\Karte\card_Kc.png" />
+    <None Remove="Images\Karte\card_Kd.png" />
+    <None Remove="Images\Karte\card_Kh.png" />
+    <None Remove="Images\Karte\card_Ks.png" />
+    <None Remove="Images\Karte\card_Qc.png" />
+    <None Remove="Images\Karte\card_Qd.png" />
+    <None Remove="Images\Karte\card_Qh.png" />
+    <None Remove="Images\Karte\card_Qs.png" />
+    <None Remove="Images\Karte\card_Tc.png" />
+    <None Remove="Images\Karte\card_Td.png" />
+    <None Remove="Images\Karte\card_Th.png" />
+    <None Remove="Images\Karte\card_Ts.png" />
+    <None Remove="Images\Slike\bot.png" />
+    <None Remove="Images\Slike\cardBack.png" />
+    <None Remove="Images\Slike\dealerLogo.png" />
+    <None Remove="Images\Slike\human.jpg" />
+    <None Remove="Images\Slike\iconBet.jpg" />
+    <None Remove="Images\Slike\next.png" />
+    <None Remove="Images\Slike\pause.png" />
+    <None Remove="Images\Slike\play.png" />
+    <None Remove="Images\Slike\poker-chip.png" />
+    <None Remove="Images\Slike\restart.png" />
+    <None Remove="Images\Slike\resume.png" />
+    <None Remove="Images\Slike\returnButton.png" />
+    <None Remove="Images\Slike\stats.png" />
+    <None Remove="Images\Slike\Table.jpg" />
+    <None Remove="Images\Slike\undo.png" />
+    <None Remove="Images\Slike\userpic.png" />
+    <None Remove="Images\Slike\userpicture.png" />
+    <None Remove="libs\K4os.Compression.LZ4.dll" />
+    <None Remove="libs\K4os.Compression.LZ4.Streams.dll" />
+    <None Remove="libs\K4os.Hash.xxHash.dll" />
+    <None Remove="libs\MicroMvvm.dll" />
+    <None Remove="libs\Microsoft.Bcl.AsyncInterfaces.dll" />
+    <None Remove="libs\MySql.Data.dll" />
+    <None Remove="libs\OmahaHandConverter.dll" />
+    <None Remove="libs\&#xD;&#xA;		  +&#xD;&#xA;		  ..dll" />
+    <None Remove="libs\System.Windows.Controls.DataVisualization.Toolkit.dll" />
+    <None Remove="libs\WPFToolkit.dll" />
+    <None Remove="View\dealerLogo.png" />
+    <None Remove="View\dealerpic.png" />
+    <None Remove="View\iconBet.jpg" />
+    <None Remove="View\next.png" />
+    <None Remove="View\pause.png" />
+    <None Remove="View\poker-chip.png" />
+    <None Remove="View\restart.png" />
+    <None Remove="View\resume.png" />
+    <None Remove="View\returnButton.png" />
+    <None Remove="View\stats.png" />
+    <None Remove="View\undo.png" />
+    <None Remove="View\userpic.png" />
+    <None Remove="View\userpicture.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Files\AllFlopCombos.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\imgs\dealerLogo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\imgs\pause.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\imgs\poker-chip.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\imgs\resume.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\imgs\stats.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\imgs\userpic.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Karte\card_2c.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Karte\card_2d.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Karte\card_2h.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Karte\card_2s.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Karte\card_3c.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Karte\card_3d.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Karte\card_3h.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Karte\card_3s.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Karte\card_4c.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Karte\card_4d.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Karte\card_4h.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Karte\card_4s.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Karte\card_5c.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Karte\card_5d.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Karte\card_5h.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Karte\card_5s.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Karte\card_6c.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Karte\card_6d.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Karte\card_6h.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Karte\card_6s.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Karte\card_7c.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Karte\card_7d.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Karte\card_7h.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Karte\card_7s.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Karte\card_8c.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Karte\card_8d.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Karte\card_8h.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Karte\card_8s.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Karte\card_9c.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Karte\card_9d.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Karte\card_9h.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Karte\card_9s.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Karte\card_Ac.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Karte\card_Ad.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Karte\card_Ah.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Karte\card_As.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Karte\card_Jc.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Karte\card_Jd.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Karte\card_Jh.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Karte\card_Js.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Karte\card_Kc.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Karte\card_Kd.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Karte\card_Kh.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Karte\card_Ks.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Karte\card_Qc.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Karte\card_Qd.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Karte\card_Qh.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Karte\card_Qs.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Karte\card_Tc.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Karte\card_Td.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Karte\card_Th.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Karte\card_Ts.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Slike\bot.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Slike\cardBack.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Slike\dealerLogo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Slike\human.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Slike\iconBet.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Slike\next.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Slike\pause.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Slike\play.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Slike\poker-chip.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Slike\restart.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Slike\resume.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Slike\returnButton.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Slike\stats.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Slike\Table.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Slike\undo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Slike\userpic.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Slike\userpicture.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="libs\K4os.Compression.LZ4.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="libs\K4os.Compression.LZ4.Streams.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="libs\K4os.Hash.xxHash.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="libs\MicroMvvm.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="libs\Microsoft.Bcl.AsyncInterfaces.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="libs\MySql.Data.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="libs\OmahaHandConverter.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="libs\System.Windows.Controls.DataVisualization.Toolkit.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="libs\WPFToolkit.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="DBLib" Version="1.0.4" />
+    <PackageReference Include="DBUsers" Version="1.0.1" />
+    <PackageReference Include="DecisionMaking" Version="1.0.57" />
+    <PackageReference Include="DocumentFormat.OpenXml" Version="2.19.0" />
+    <PackageReference Include="Expression.Blend.Sdk" Version="1.0.2" />
+    <PackageReference Include="log4net" Version="2.0.15" />
+    <PackageReference Include="Microsoft.Expression.Blend.SDK.WPF" Version="4.0.0" />
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
+    <PackageReference Include="NLog" Version="5.1.1" />
+    <PackageReference Include="PokerSuite.AzureBlob" Version="1.6.9" />
+    <PackageReference Include="PokerSuite.GTOPlusAPI" Version="1.6.9" />
+    <PackageReference Include="PokerSuite.RefreshSolutionHierarchyCache" Version="1.5.11" />
+    <PackageReference Include="PokerSuite.StrategyClient" Version="1.6.9" />
+    <PackageReference Include="PokerSuite.StrategyServiceBlob" Version="1.4.7" />
+    <PackageReference Include="PokerSuite.StrategyServiceTexasSolver" Version="1.6.9" />
+    <PackageReference Include="PokerSuite.StrategyShared" Version="1.6.9" />
+    <PackageReference Include="PokerUtil" Version="1.0.2" />
+    <PackageReference Include="Prism.Core" Version="8.1.97" />
+    <PackageReference Include="QueryDBLib" Version="1.0.5" />
+    <PackageReference Include="RulesLib" Version="1.0.2" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
+    <PackageReference Include="System.Management" Version="7.0.0" />
+    <PackageReference Include="System.Text.Json" Version="7.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="CommonServiceLocator, Version=2.0.2.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\CommonServiceLocator.2.0.2\lib\net47\CommonServiceLocator.dll</HintPath>
+    </Reference>
+    <Reference Include="MicroMvvm, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>D:\MvvmExample\MvvmExample\MicroMvvm\bin\Debug\MicroMvvm.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="OmahaHandConverter, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>libs\OmahaHandConverter.dll</HintPath>
+    </Reference>
+    <Reference Include="Prism, Version=8.1.97.5141, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
+      <HintPath>..\packages\Prism.Core.8.1.97\lib\net47\Prism.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Controls.DataVisualization.Toolkit, Version=3.5.40128.1, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>libs\System.Windows.Controls.DataVisualization.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="WPFToolkit, Version=3.5.40128.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>libs\WPFToolkit.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Images\Slike\dealerpic.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+</Project>

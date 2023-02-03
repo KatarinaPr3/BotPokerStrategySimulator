@@ -1,0 +1,529 @@
+﻿<Window x:Class="PokerTable.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:ViewModel="clr-namespace:PokerTable.ViewModel"
+        xmlns:View="clr-namespace:PokerTable.View"
+        xmlns:local="clr-namespace:PokerTable"
+        xmlns:ii="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:images="clr-namesapce:PokerTable.Images"
+        Closed="MainWindow_Closed"
+        mc:Ignorable="d"      
+        Title="MainWindow" Height="900" Width="1150" MinWidth="1150" SizeToContent="Width">
+    <Window.DataContext>
+        <ViewModel:MainWindowViewModel/>
+    </Window.DataContext>
+    <ii:Interaction.Triggers>
+        <ii:EventTrigger EventName="Loaded">
+            <ii:InvokeCommandAction Command="{Binding MyICommandThatShouldHandleLoaded}" />
+        </ii:EventTrigger>
+    </ii:Interaction.Triggers>
+    <Window.Resources>
+        <Style x:Key="styleButton"
+               TargetType="{x:Type Button}">
+            <Style.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+            </Style.Resources>
+            <Setter Property="Background" Value="white"/>
+            <Setter Property="BorderBrush" Value="Black"/>
+            <Setter Property="BorderThickness" Value="2"/>
+        </Style>
+        <Style x:Key="Style1"
+       TargetType="{x:Type Button}">
+            <Setter Property="BorderThickness" Value="1"/>
+        </Style>
+        <Style x:Key="Style2"
+       TargetType="{x:Type Button}">
+
+            <Style.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+            </Style.Resources>
+            <Setter Property="Background" Value="white"/>
+            <Setter Property="Foreground" Value="Black"/>
+
+            <Setter Property="BorderBrush" Value="DarkGray"/>
+            <Setter Property="BorderThickness" Value="3"/>
+            <Setter Property="Margin" Value="1 "/>
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
+    </Window.Resources>
+    <Window.InputBindings>
+        <KeyBinding Key="Space" Command="{Binding PauseCommand}"/>
+        <KeyBinding Key="Right" Command="{Binding NextIsMyTurnCommand}"/>
+        <KeyBinding Key="Left" Command="{Binding UndoCommand}"/>
+    </Window.InputBindings>
+    <Grid Cursor="{Binding CursorMain, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="700"/>
+            <ColumnDefinition MaxWidth="{Binding WidthMainRight, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                              Width="{Binding WidthMainRight, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="500"/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="2" Grid.RowSpan="2" Grid.Column="0">
+            <StackPanel Orientation="Horizontal" >
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="70"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition/>
+
+                    </Grid.RowDefinitions>
+                    <StackPanel Orientation="Vertical" 
+                                Visibility="{Binding HumanDecision, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                                Grid.Column="1" 
+                                VerticalAlignment="Bottom">
+                        <StackPanel Visibility="{Binding AllButtonsVisibility}" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <StackPanel.Style>
+                                <Style TargetType="{x:Type StackPanel}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Path=AllButtonsVisibility}" 
+                                                     Value="Visible">
+                                            <DataTrigger.EnterActions>
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <DoubleAnimation Storyboard.TargetProperty='Opacity' 
+                                                                         From='0'
+                                                                         To='1' 
+                                                                         Duration="0:0:1"/>
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </DataTrigger.EnterActions>
+                                            <DataTrigger.ExitActions>
+                                                <BeginStoryboard>
+                                                    <Storyboard FillBehavior='Stop'>
+                                                        <DoubleAnimation Storyboard.TargetProperty='Opacity'
+                                                                         To='1'
+                                                                         Duration='0:0:1' />
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </DataTrigger.ExitActions>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </StackPanel.Style>
+                            <TextBox Height="25"
+                                     Width="50"
+                                     BorderThickness="2"
+                                     BorderBrush="DarkGray"
+                                     Text="{Binding BetSizePlayer, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, StringFormat=N2}" 
+                                     VerticalAlignment="Center" 
+                                     HorizontalAlignment="Center" 
+                                     VerticalContentAlignment="Center"/>
+                            <Button Style="{StaticResource Style2}" 
+                                    Width="35" 
+                                    Height="25" 
+                                    Foreground="Black" 
+                                    Content="All In" 
+                                    Command="{Binding AllInBtn}"/>
+                            <Button Style="{StaticResource Style2}" 
+                                    Width="40" Height="25" 
+                                    Foreground="Black" 
+                                    Content="{Binding BtnBetSize1}" 
+                                    Command="{Binding Bet1}"/>
+                            <Button Style="{StaticResource Style2}" 
+                                    Width="40" 
+                                    Height="25" 
+                                    Foreground="Black" 
+                                    Content="{Binding BtnBetSize2}" 
+                                    Command="{Binding Bet2}"/>
+                            <Button Style="{StaticResource Style2}" 
+                                    Width="40" 
+                                    Height="25" 
+                                    Foreground="Black" 
+                                    Content="{Binding BtnBetSize3}" 
+                                    Command="{Binding Bet3}"/>
+                            <Button Style="{StaticResource Style2}" 
+                                    Width="40" 
+                                    Height="25" 
+                                    Foreground="Black" 
+                                    Content="{Binding BtnBetSize4}" 
+                                    Command="{Binding Bet4}"/>
+                            <Button Style="{StaticResource Style2}"
+                                    Width="40" 
+                                    Height="25" 
+                                    Foreground="Black" 
+                                    Content="{Binding BtnBetSize5}" 
+                                    Command="{Binding Bet5}"
+                                    Visibility="{Binding VisibilityBet5}"/>
+                        </StackPanel>
+                        <StackPanel Visibility="{Binding AllButtonsVisibility}" 
+                                    HorizontalAlignment="Center" 
+                                    Orientation="Horizontal" 
+                                    Margin="0 10 0 0">
+                            <Button Style="{StaticResource Style2}" 
+                                    Width="70" 
+                                    Height="25" 
+                                    Visibility="{Binding IsVisibleFoldBtn}" 
+                                    Content="Fold" 
+                                    Command="{Binding FoldBtn}"/>
+                            <Button Style="{StaticResource Style2}" 
+                                    Width="70" 
+                                    Height="25" 
+                                    Visibility="{Binding IsVisibleCallBtn}" 
+                                    Content="Call" 
+                                    Command="{Binding CallBtn}"/>
+                            <Button Style="{StaticResource Style2}" Width="70" Height="25" Visibility="{Binding IsVisibleRaiseBtn}" Content="Raise" Command="{Binding RaiseBtn}"/>
+                            <Button Style="{StaticResource Style2}" Width="70" Height="25" Visibility="{Binding IsVisibleCheckBtn}" Content="Check" Command="{Binding CheckBtn}"/>
+                            <Button Style="{StaticResource Style2}" Width="70" Height="25" Visibility="{Binding IsVisibleBetBtn}" Content="Bet" Command="{Binding BetBtn}"/>
+                        </StackPanel>
+
+                    </StackPanel>
+                    <ListView Grid.Row="2" Width="700" Grid.Column="0" Grid.ColumnSpan="2" ScrollViewer.CanContentScroll="True"  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+  Padding="10 15" ItemsSource="{Binding StringsLog, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" >
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListBoxItem">
+                                <Setter Property="Margin" Value="0"/>
+                                <Setter Property="Padding" Value="0"/>
+                                <Setter Property="FontSize" Value="18"/>
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                        <ListView.Style>
+                            <Style TargetType="ListView">
+                                <Setter Property="Margin" Value="0"/>
+                                <Setter Property="Padding" Value="0"/>
+                                <Setter Property="BorderThickness" Value="0"/>
+                            </Style>
+                        </ListView.Style>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Path=.}" TextWrapping="Wrap"></TextBlock>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                    <TextBox Background="White"  Grid.Row="1" Padding="10 0 0 0 "  Width="250" Height="30" FontSize="22" Text="{Binding PlayerTimeToAct, UpdateSourceTrigger=PropertyChanged, StringFormat=N2}"  Foreground="Black" HorizontalAlignment="Left" BorderThickness="0"/>
+                </Grid>
+            </StackPanel>
+
+        </Grid>
+        <Grid Grid.Row="0">
+            <StackPanel Orientation="Horizontal">
+                <Menu DockPanel.Dock="Top" Height="30" Width="80"  VerticalAlignment="Center" HorizontalAlignment="Left">
+                    <MenuItem Padding="10 5 0 0" Header="File" FontSize="16" VerticalContentAlignment="Center"  VerticalAlignment="Bottom" >
+                        <MenuItem Header="Save" Command="{Binding SaveJson}"/>
+                        <MenuItem Header="Load" Command="{Binding LoadJson}"/>
+                        <MenuItem Header="Load from HH" Command="{Binding LoadFromHH}"/>
+                    </MenuItem>
+
+                </Menu>
+                <Menu DockPanel.Dock="Top" Height="30" Width="120"  VerticalAlignment="Center" HorizontalAlignment="Left">
+                    <MenuItem Padding="0 5 0 0" Header="Options" FontSize="16" VerticalContentAlignment="Center"  VerticalAlignment="Bottom" >
+                       
+                        <MenuItem Header="{Binding TextShowHide}" Command="{Binding HideCardsClick}"/>
+                        <MenuItem Header="{Binding TextShow}" Command="{Binding ShowCardsClick}"/>
+                        <MenuItem Header="Settings" Command="{Binding ShowStrategyClick}"/>
+                        <CheckBox Content="Show Ranges" VerticalContentAlignment="Center" IsChecked="{Binding ShowRangesShow, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                        <MenuItem Header="Test Different Boards" Command="{Binding TestingBoards}" IsEnabled="{Binding CanTestBoardsProp, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                        <MenuItem Header="View Winnings" Command="{Binding ViewWinnings}"/>
+                        
+                        
+                    </MenuItem>
+                   
+                </Menu>
+                <StackPanel Visibility="{Binding AllButtonsVisibility, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Orientation="Horizontal">
+                    <StackPanel.Style>
+                        <Style TargetType="{x:Type StackPanel}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Path=AllButtonsVisibility}" Value="Visible">
+                            <DataTrigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetProperty='Opacity' From='0' To='1' Duration="0:0:1"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </DataTrigger.EnterActions>
+                            <DataTrigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard FillBehavior='Stop'>
+                                        <DoubleAnimation Storyboard.TargetProperty='Opacity' To='1' Duration='0:0:1' />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </DataTrigger.ExitActions>
+                        </DataTrigger>
+                    </Style.Triggers>
+                    </Style>
+                    </StackPanel.Style>
+
+                    <Button ToolTipService.ToolTip="{Binding PauseResumeTxt}" Background="Transparent" BorderThickness="0" Command="{Binding RunCommand}" >
+                        <Image Source="{Binding PauseResumeImg, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Width="28" Height="28"/>
+                    </Button>
+                    <Button ToolTipService.ToolTip="New Hand" Background="Transparent" BorderThickness="0" Margin="5 0 10 0"  Command="{Binding NewHand}" Visibility="{Binding RunMode, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                        <Image Source="/Images/Slike/restart.png" Width="28" Height="28"/>
+
+                    </Button>
+                    <Button ToolTipService.ToolTip="Undo" BorderThickness="0" Background="Transparent" Margin=" 0"  Command="{Binding UndoCommand}" Visibility="{Binding RunMode, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                        <Image Source="/Images/Slike/undo.png" Width="30" Height="30"/>
+                    </Button>
+                    <Button ToolTipService.ToolTip="Next" BorderThickness="0" Background="Transparent"  Margin="5 0 10 0"  Command="{Binding NextIsMyTurnCommand}" IsEnabled="{Binding CanExecuteNext, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Visibility="{Binding RunMode, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                        <Image Source="/Images/Slike/next.png" Width="30" Height="30"/>
+                    </Button>
+                    <!--<Button Style="{StaticResource ResourceKey=styleButton}" Margin="5 0 10 0" Width="100" Content="{Binding PauseResumeTxt}" Command="{Binding PauseCommand}">
+
+                </Button>-->
+                    <Button Style="{StaticResource ResourceKey=styleButton}" Margin="5 0 10 0" Width="100" Visibility="{Binding BotButtonVisible, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Content="{Binding BotBetRaise, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Command="{Binding BetRaiseBtnBot}" IsEnabled="{Binding CanExecuteBotProp, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                    </Button>
+                    <Button Style="{StaticResource ResourceKey=styleButton}" Margin="5 0 10 0" Width="100" Visibility="{Binding BotButtonVisible, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Content="{Binding BotCheckCall, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Command="{Binding CheckCallBtnBot}" IsEnabled="{Binding CanExecuteBotProp, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                    </Button>
+
+                </StackPanel>
+               
+            </StackPanel>
+        </Grid>
+        <Grid  Grid.Column="1" Grid.RowSpan="4" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="1"/>
+            <TextBlock Grid.Row="1" HorizontalAlignment="Center" Text="{Binding TextPercentHandBet}"/>
+            <TextBlock Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" Text="{Binding TextPercentHandCheck}" />
+            <TextBlock Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" Text="{Binding TextPercentHandFold}" />
+            <StackPanel Background="White" Orientation="Vertical">
+                <TextBlock Visibility="{Binding VisibilityHoldemOrOmaha}" Text="Bet Range" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+                    <TextBlock Text="Choose Index Bet "/>
+                    <ComboBox Visibility="{Binding AllBetCoeffVisibility, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Width="100" ItemsSource="{Binding AllBetCoeff, StringFormat=n2, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" SelectedValue="{Binding BetCoeff, StringFormat=n2, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" SelectedItem="{Binding BetCoeff, StringFormat=n2, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" FontSize="12">
+                    </ComboBox>
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Background="White" Grid.Column="1" >
+                <TextBlock Visibility="{Binding VisibilityHoldemOrOmaha}" Text="Check Range" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            </StackPanel>
+            <StackPanel Background="White" Grid.Column="2">
+                <TextBlock Visibility="{Binding VisibilityHoldemOrOmaha}" Text="Fold Range" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            </StackPanel>
+            <!--Implementation for HOLDEM-->
+            <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Visibility="{Binding VisibilityShowRangesShow, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <View:RangesHoldem WidthHoldemAndOmaha="{Binding WidthHoldemAndOmahaGrid, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Visibility="{Binding VisibilityHoldem}" Grid.Column="0" RangeListHoldem="{Binding HoldemRanges, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" ImageSources1="{Binding RangeImageSources1, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" ImageSources2="{Binding RangeImageSources2, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" ImageSources3="{Binding RangeImageSources3, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" ImageSources4="{Binding RangeImageSources4, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  RangeList="{Binding RangeTextBetRaise}" VisibilityHoldemOrOmaha="{Binding VisibilityHoldemOrOmaha}" WidthRangesHoldem="{Binding WidthRangesHoldem}" />
+                <View:RangesHoldem WidthHoldemAndOmaha="{Binding WidthHoldemAndOmahaGrid, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Visibility="{Binding VisibilityHoldem}" Grid.Column="1" RangeListHoldem="{Binding HoldemRangesMid, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  ImageSources1="{Binding RangeImageSourcesMiddle1, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  ImageSources2="{Binding RangeImageSourcesMiddle2, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" ImageSources3="{Binding RangeImageSourcesMiddle3, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"   ImageSources4="{Binding RangeImageSourcesMiddle4, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" RangeList="{Binding RangeTextCallCheck}" WidthRangesHoldem="{Binding WidthRangesHoldem}"/>
+                <View:RangesHoldem WidthHoldemAndOmaha="{Binding WidthHoldemAndOmahaGrid, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Visibility="{Binding VisibilityHoldem}"  Grid.Column="2" RangeListHoldem="{Binding HoldemRangesFold, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" RangeList="{Binding RangeTextFold}" WidthRangesHoldem="{Binding WidthRangesHoldem}"/>
+            </Grid>
+            <!--Implementation for HOLDEM-->
+
+            <!--Implementation for OMAHA-->
+            <Grid Grid.ColumnSpan="3" Grid.Column="0" Grid.Row="2" Grid.RowSpan="2" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Row="0" Grid.ColumnSpan="3">
+                    <StackPanel Visibility="{Binding VisibilityOmahaPostflop, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <Button Content="Refresh" Margin="35 0"  Grid.Column="0" Grid.ColumnSpan="2" Width="100" Command="{Binding RefreshOmahaBet}" Height="25"/>
+                        <StackPanel Visibility="{Binding VisibilityOmahaPostflop, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <TextBlock Text="Grid " VerticalAlignment="Center"/>
+                            <ComboBox Width="100" ItemsSource="{Binding EnumGridShow}" SelectedItem="{Binding GridShowSelected,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" SelectedValue="{Binding GridShowSelected, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+                <Grid Grid.ColumnSpan="3" Grid.Row="1"  Visibility="{Binding VisibilityShowRangesShow, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <View:RangesOmaha Visibility="{Binding BetRaiseOmahaVisibility}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" ShowdownsDrawsOmaha="{Binding OmahaShowdowns, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" DrawsOmaha="{Binding OmahaDraws, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" RangeListOmaha="{Binding OmahaRanges, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" SelectedShowdown="{Binding SelectedShowdown, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                    <View:RangesOmaha Visibility="{Binding CheckCallOmahaVisibility}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" ShowdownsDrawsOmaha="{Binding OmahaShowdownsCheckCall, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  DrawsOmaha="{Binding OmahaDrawsCheckCall, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" RangeListOmaha="{Binding OmahaRangesMid,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" SelectedShowdown="{Binding SelectedShowdown, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                    <View:RangesOmaha Visibility="{Binding FoldOmahaVisibility}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" ShowdownsDrawsOmaha="{Binding OmahaShowdownsFold}" DrawsOmaha="{Binding OmahaDrawsFold, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  RangeListOmaha="{Binding OmahaRangesFold, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" SelectedShowdown="{Binding SelectedShowdown, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                </Grid>
+            </Grid>
+        </Grid>
+        <Grid Grid.Row="1"  VerticalAlignment="Stretch">
+            <Grid.Background>
+               <ImageBrush ImageSource="./Images/Slike/Table.jpg"/>
+            </Grid.Background>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" VerticalAlignment="Center" HorizontalAlignment="Left" Orientation="Vertical" Margin="-20">
+            </StackPanel>
+            <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" VerticalAlignment="Center">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <View:PlayerView BotOrHuman="{Binding Player1.BotOrHuman}" VerticalAlignmentStats="{Binding Player1.VerticalAlignmentStats, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" HorizontalAlignmentStats="{Binding Player1.HorizontalAlignmentStats, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" ShowStatistic="{Binding Player1.ShowStatistic}" RowVisibilityStats="{Binding Player1.RowStats}" ColumnVisibilityStats="{Binding Player1.ColumnStats}" ImageBotHuman="{Binding Player1.BotHumanImg}" RowVisibilityDealer="{Binding Player1.RowDealer}" ColumnVisibilityDealer="{Binding Player1.ColumnDealer}" WidthOfColumn="{Binding Player1.WidthColumn}" HorizontalAlignment="Left" Margin="-30 0 0 0"
+                    TargetNumber="{Binding Player1.Balance}" IsVisibleBool="{Binding Player1.IsVisible, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  RowVisibility="{Binding Player1.RowBet}" ColumnVisibility="{Binding Player1.ColumnBet}" NameOfPlayer="{Binding Player1.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Balance="{Binding Player1.Balance, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" BetSize="{Binding Player1.BetSize}" IsDealer="{Binding Player1.IsDealer}" Cards="{Binding Player1.Cards}" ImageSource1="{Binding Player1.ImageSourceCard1, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" ImageSource2="{Binding Player1.ImageSourceCard2, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                    ImageSource3="{Binding Player1.ImageSourceCard3, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" ImageSource4="{Binding Player1.ImageSourceCard4, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                    DealerVisibility="{Binding Player1.VisibilityDealer}" DoubleClickCommand="{Binding Player1.ShowCardsPlayerClick}" StrategyProfile="{Binding Player1.Strategy, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsMyTurn="{Binding Player1.IsMyTurn, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" BetSizeVisibility="{Binding Player1.BetVisibility}"  VisibilityCardsInView="{Binding Player1.VisibilityForCards, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FoldCommand="{Binding Player1.FoldCommandForPlayer}" RowVisibilityButton="{Binding Player1.RowButton}" ColumnVisibilityButton="{Binding Player1.ColumnButton}" InGame="{Binding Player1.InGame, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Action="{Binding Player1.Action, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" IsWinner="{Binding Player1.IsWinner, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" VisibilityOmaha="{Binding VisibilityOmaha}"/>
+
+                    <View:PlayerView BotOrHuman="{Binding Player2.BotOrHuman}"  VerticalAlignmentStats="{Binding Player2.VerticalAlignmentStats, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" HorizontalAlignmentStats="{Binding Player2.HorizontalAlignmentStats, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  ShowStatistic="{Binding Player2.ShowStatistic}" RowVisibilityStats="{Binding Player2.RowStats}" ColumnVisibilityStats="{Binding Player2.ColumnStats}" ImageBotHuman="{Binding Player2.BotHumanImg}" RowVisibilityDealer="{Binding Player2.RowDealer}" ColumnVisibilityDealer="{Binding Player2.ColumnDealer}" IsVisibleBool="{Binding Player2.IsVisible, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" WidthOfColumn="{Binding Player2.WidthColumn}" Grid.Column="1" HorizontalAlignment="Right" Margin="0 0 -30 0" TargetNumber="{Binding Player2.Balance}"   RowVisibility="{Binding Player2.RowBet}" ColumnVisibility="{Binding Player2.ColumnBet}" NameOfPlayer="{Binding Player2.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Balance="{Binding Player2.Balance, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  BetSize="{Binding Player2.BetSize}" IsDealer="{Binding Player2.IsDealer}" Cards="{Binding Player2.Cards}" ImageSource1="{Binding Player2.ImageSourceCard1, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" ImageSource2="{Binding Player2.ImageSourceCard2, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  ImageSource3="{Binding Player2.ImageSourceCard3, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" ImageSource4="{Binding Player2.ImageSourceCard4, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" DealerVisibility="{Binding Player2.VisibilityDealer}" DoubleClickCommand="{Binding Player2.ShowCardsPlayerClick}" StrategyProfile="{Binding Player2.Strategy, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsMyTurn="{Binding Player2.IsMyTurn, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" BetSizeVisibility="{Binding Player2.BetVisibility}" VisibilityCardsInView="{Binding Player2.VisibilityForCards, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FoldCommand="{Binding Player2.FoldCommandForPlayer}" RowVisibilityButton="{Binding Player2.RowButton}" ColumnVisibilityButton="{Binding Player2.ColumnButton}" InGame="{Binding Player2.InGame, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Action="{Binding Player2.Action, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" IsWinner="{Binding Player2.IsWinner, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" VisibilityOmaha="{Binding VisibilityOmaha}"/>
+                </Grid>
+                
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Grid.RowSpan="3" VerticalAlignment="Top" HorizontalAlignment="Center">
+                <View:PlayerView BotOrHuman="{Binding Player3.BotOrHuman}"  ShowStatistic="{Binding Player3.ShowStatistic}" VerticalAlignmentStats="{Binding Player3.VerticalAlignmentStats}" HorizontalAlignmentStats="{Binding Player3.HorizontalAlignmentStats}" RowVisibilityStats="{Binding Player3.RowStats}" ColumnVisibilityStats="{Binding Player3.ColumnStats}" ImageBotHuman="{Binding Player3.BotHumanImg}" RowVisibilityDealer="{Binding Player3.RowDealer}" ColumnVisibilityDealer="{Binding Player3.ColumnDealer}" WidthOfColumn="{Binding Player3.WidthColumn}" TargetNumber="{Binding Player3.Balance}" IsVisibleBool="{Binding Player3.IsVisible, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" RowVisibility="{Binding Player3.RowBet}" ColumnVisibility="{Binding Player3.ColumnBet}" NameOfPlayer="{Binding Player3.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Balance="{Binding Player3.Balance, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  BetSize="{Binding Player3.BetSize}" IsDealer="{Binding Player3.IsDealer}" Cards="{Binding Player3.Cards}" ImageSource1="{Binding Player3.ImageSourceCard1, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" ImageSource2="{Binding Player3.ImageSourceCard2, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" ImageSource3="{Binding Player3.ImageSourceCard3, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" ImageSource4="{Binding Player3.ImageSourceCard4, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                 DealerVisibility="{Binding Player3.VisibilityDealer}" DoubleClickCommand="{Binding Player3.ShowCardsPlayerClick}" StrategyProfile="{Binding Player3.Strategy, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsMyTurn="{Binding Player3.IsMyTurn, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" BetSizeVisibility="{Binding Player3.BetVisibility}" VisibilityCardsInView="{Binding Player3.VisibilityForCards, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FoldCommand="{Binding Player3.FoldCommandForPlayer}"  RowVisibilityButton="{Binding Player3.RowButton}" ColumnVisibilityButton="{Binding Player3.ColumnButton}" InGame="{Binding Player3.InGame, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Action="{Binding Player3.Action, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" IsWinner="{Binding Player3.IsWinner, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" VisibilityOmaha="{Binding VisibilityOmaha}"/>
+
+                <View:PlayerView BotOrHuman="{Binding Player4.BotOrHuman}"  HorizontalAlignmentStats="{Binding Player4.HorizontalAlignmentStats}"  VerticalAlignmentStats="{Binding Player4.VerticalAlignmentStats}"  ShowStatistic="{Binding Player4.ShowStatistic}" RowVisibilityStats="{Binding Player4.RowStats}" ColumnVisibilityStats="{Binding Player4.ColumnStats}" ImageBotHuman="{Binding Player4.BotHumanImg}" RowVisibilityDealer="{Binding Player4.RowDealer}" ColumnVisibilityDealer="{Binding Player4.ColumnDealer}" WidthOfColumn="{Binding Player4.WidthColumn}"  TargetNumber="{Binding Player4.Balance}" IsVisibleBool="{Binding Player4.IsVisible, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" RowVisibility="{Binding Player4.RowBet}" ColumnVisibility="{Binding Player4.ColumnBet}" NameOfPlayer="{Binding Player4.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Balance="{Binding Player4.Balance, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  BetSize="{Binding Player4.BetSize}" IsDealer="{Binding Player4.IsDealer}" Cards="{Binding Player4.Cards}" ImageSource1="{Binding Player4.ImageSourceCard1, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" ImageSource2="{Binding Player4.ImageSourceCard2, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  ImageSource3="{Binding Player4.ImageSourceCard3, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" ImageSource4="{Binding Player4.ImageSourceCard4, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  DealerVisibility="{Binding Player4.VisibilityDealer}" DoubleClickCommand="{Binding Player4.ShowCardsPlayerClick}" StrategyProfile="{Binding Player4.Strategy, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsMyTurn="{Binding Player4.IsMyTurn, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" BetSizeVisibility="{Binding Player4.BetVisibility}" VisibilityCardsInView="{Binding Player4.VisibilityForCards, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FoldCommand="{Binding Player4.FoldCommandForPlayer}"  RowVisibilityButton="{Binding Player4.RowButton}" ColumnVisibilityButton="{Binding Player4.ColumnButton}" InGame="{Binding Player4.InGame, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Action="{Binding Player4.Action, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" IsWinner="{Binding Player4.IsWinner, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" VisibilityOmaha="{Binding VisibilityOmaha}"/>
+
+                <View:PlayerView BotOrHuman="{Binding Player5.BotOrHuman}"  HorizontalAlignmentStats="{Binding Player5.HorizontalAlignmentStats}"  VerticalAlignmentStats="{Binding Player5.VerticalAlignmentStats}"  ShowStatistic="{Binding Player5.ShowStatistic}" RowVisibilityStats="{Binding Player5.RowStats}" ColumnVisibilityStats="{Binding Player5.ColumnStats}" ImageBotHuman="{Binding Player5.BotHumanImg}" RowVisibilityDealer="{Binding Player5.RowDealer}" ColumnVisibilityDealer="{Binding Player5.ColumnDealer}" WidthOfColumn="{Binding Player5.WidthColumn}"  TargetNumber="{Binding Player5.Balance}" IsVisibleBool="{Binding Player5.IsVisible, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" RowVisibility="{Binding Player5.RowBet}" ColumnVisibility="{Binding Player5.ColumnBet}" NameOfPlayer="{Binding Player5.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Balance="{Binding Player5.Balance, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  BetSize="{Binding Player5.BetSize}" IsDealer="{Binding Player5.IsDealer}" Cards="{Binding Player5.Cards}" ImageSource1="{Binding Player5.ImageSourceCard1, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" ImageSource2="{Binding Player5.ImageSourceCard2, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  ImageSource3="{Binding Player5.ImageSourceCard3, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" ImageSource4="{Binding Player5.ImageSourceCard4, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"   DealerVisibility="{Binding Player5.VisibilityDealer}"  DoubleClickCommand="{Binding Player5.ShowCardsPlayerClick}" StrategyProfile="{Binding Player5.Strategy, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsMyTurn="{Binding Player5.IsMyTurn, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" BetSizeVisibility="{Binding Player5.BetVisibility}" VisibilityCardsInView="{Binding Player5.VisibilityForCards, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FoldCommand="{Binding Player5.FoldCommandForPlayer}"  RowVisibilityButton="{Binding Player5.RowButton}" ColumnVisibilityButton="{Binding Player5.ColumnButton}" InGame="{Binding Player5.InGame, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Action="{Binding Player5.Action, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" IsWinner="{Binding Player5.IsWinner, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" VisibilityOmaha="{Binding VisibilityOmaha}"/>
+
+                <View:PlayerView BotOrHuman="{Binding Player6.BotOrHuman}"  HorizontalAlignmentStats="{Binding Player6.HorizontalAlignmentStats}"  VerticalAlignmentStats="{Binding Player6.VerticalAlignmentStats}"  ShowStatistic="{Binding Player6.ShowStatistic}" RowVisibilityStats="{Binding Player6.RowStats}" ColumnVisibilityStats="{Binding Player6.ColumnStats}" ImageBotHuman="{Binding Player6.BotHumanImg}" RowVisibilityDealer="{Binding Player6.RowDealer}" ColumnVisibilityDealer="{Binding Player6.ColumnDealer}" WidthOfColumn="{Binding Player6.WidthColumn}"  TargetNumber="{Binding Player6.Balance}" IsVisibleBool="{Binding Player6.IsVisible, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" RowVisibility="{Binding Player6.RowBet}" ColumnVisibility="{Binding Player6.ColumnBet}" NameOfPlayer="{Binding Player6.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Balance="{Binding Player6.Balance, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  BetSize="{Binding Player6.BetSize}" IsDealer="{Binding Player6.IsDealer}" Cards="{Binding Player6.Cards}" ImageSource1="{Binding Player6.ImageSourceCard1, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" ImageSource2="{Binding Player6.ImageSourceCard2, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  ImageSource3="{Binding Player6.ImageSourceCard3, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" ImageSource4="{Binding Player6.ImageSourceCard4, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" DealerVisibility="{Binding Player6.VisibilityDealer}" DoubleClickCommand="{Binding Player6.ShowCardsPlayerClick}" StrategyProfile="{Binding Player6.Strategy, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsMyTurn="{Binding Player6.IsMyTurn, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" BetSizeVisibility="{Binding Player6.BetVisibility}" VisibilityCardsInView="{Binding Player6.VisibilityForCards, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FoldCommand="{Binding Player6.FoldCommandForPlayer}"  RowVisibilityButton="{Binding Player6.RowButton}" ColumnVisibilityButton="{Binding Player6.ColumnButton}" InGame="{Binding Player6.InGame, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Action="{Binding Player6.Action, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" IsWinner="{Binding Player6.IsWinner, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" VisibilityOmaha="{Binding VisibilityOmaha}"/>
+            </StackPanel>
+            <StackPanel  Orientation="Horizontal" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="3" VerticalAlignment="Bottom" HorizontalAlignment="Center">
+                <!--#region Player 7-->
+
+                <View:PlayerView BotOrHuman="{Binding Player7.BotOrHuman}" 
+                                 HorizontalAlignmentStats="{Binding Player7.HorizontalAlignmentStats}" 
+                                 VerticalAlignmentStats="{Binding Player7.VerticalAlignmentStats}" 
+                                 ShowStatistic="{Binding Player7.ShowStatistic}"
+                                 RowVisibilityStats="{Binding Player7.RowStats}" 
+                                 ColumnVisibilityStats="{Binding Player7.ColumnStats}" 
+                                 ImageBotHuman="{Binding Player7.BotHumanImg}" 
+                                 RowVisibilityDealer="{Binding Player7.RowDealer}" ColumnVisibilityDealer="{Binding Player7.ColumnDealer}" WidthOfColumn="{Binding Player7.WidthColumn}" TargetNumber="{Binding Player7.Balance}" IsVisibleBool="{Binding Player7.IsVisible, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                                 RowVisibility="{Binding Player7.RowBet}" 
+                                 ColumnVisibility="{Binding Player7.ColumnBet}" 
+                                 NameOfPlayer="{Binding Player7.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                 Balance="{Binding Player7.Balance, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  
+                                 BetSize="{Binding Player7.BetSize}" IsDealer="{Binding Player7.IsDealer}" 
+                                 Cards="{Binding Player7.Cards}" ImageSource1="{Binding Player7.ImageSourceCard1, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" ImageSource2="{Binding Player7.ImageSourceCard2, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  ImageSource3="{Binding Player7.ImageSourceCard3, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" ImageSource4="{Binding Player7.ImageSourceCard4, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  DealerVisibility="{Binding Player7.VisibilityDealer}" DoubleClickCommand="{Binding Player7.ShowCardsPlayerClick}" StrategyProfile="{Binding Player7.Strategy, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsMyTurn="{Binding Player7.IsMyTurn, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" BetSizeVisibility="{Binding Player7.BetVisibility}" VisibilityCardsInView="{Binding Player7.VisibilityForCards, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FoldCommand="{Binding Player7.FoldCommandForPlayer}"  RowVisibilityButton="{Binding Player7.RowButton}" ColumnVisibilityButton="{Binding Player7.ColumnButton}" InGame="{Binding Player7.InGame, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Action="{Binding Player7.Action, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" IsWinner="{Binding Player7.IsWinner, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" VisibilityOmaha="{Binding VisibilityOmaha}"/>
+                <!--#endregion Player 7 END-->
+
+                <!--#region Player 8-->
+                <View:PlayerView BotOrHuman="{Binding Player8.BotOrHuman}" 
+                                 HorizontalAlignmentStats="{Binding Player8.HorizontalAlignmentStats}" 
+                                 VerticalAlignmentStats="{Binding Player8.VerticalAlignmentStats}" 
+                                 ShowStatistic="{Binding Player8.ShowStatistic}" 
+                                 RowVisibilityStats="{Binding Player8.RowStats}" 
+                                 ColumnVisibilityStats="{Binding Player8.ColumnStats}" 
+                                 ImageBotHuman="{Binding Player8.BotHumanImg}" 
+                                 RowVisibilityDealer="{Binding Player8.RowDealer}" 
+                                 ColumnVisibilityDealer="{Binding Player8.ColumnDealer}" 
+                                 WidthOfColumn="{Binding Player8.WidthColumn}" 
+                                 TargetNumber="{Binding Player8.Balance}" 
+                                 IsVisibleBool="{Binding Player8.IsVisible, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                                 RowVisibility="{Binding Player8.RowBet}" 
+                                 ColumnVisibility="{Binding Player8.ColumnBet}" 
+                                 NameOfPlayer="{Binding Player8.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                 Balance="{Binding Player8.Balance, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                 BetSize="{Binding Player8.BetSize}" 
+                                 IsDealer="{Binding Player8.IsDealer}" 
+                                 Cards="{Binding Player8.Cards}" 
+                                 ImageSource1="{Binding Player8.ImageSourceCard1, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                                 ImageSource2="{Binding Player8.ImageSourceCard2, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                                 ImageSource3="{Binding Player8.ImageSourceCard3, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                                 ImageSource4="{Binding Player8.ImageSourceCard4, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                                 DealerVisibility="{Binding Player8.VisibilityDealer}" 
+                                 DoubleClickCommand="{Binding Player8.ShowCardsPlayerClick}" 
+                                 StrategyProfile="{Binding Player8.Strategy, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                 IsMyTurn="{Binding Player8.IsMyTurn, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                 BetSizeVisibility="{Binding Player8.BetVisibility}" 
+                                 VisibilityCardsInView="{Binding Player8.VisibilityForCards, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                 FoldCommand="{Binding Player8.FoldCommandForPlayer}" 
+                                 RowVisibilityButton="{Binding Player8.RowButton}" 
+                                 ColumnVisibilityButton="{Binding Player8.ColumnButton}" 
+                                 InGame="{Binding Player8.InGame, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  
+                                 Action="{Binding Player8.Action, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                                 IsWinner="{Binding Player8.IsWinner, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                 VisibilityOmaha="{Binding VisibilityOmaha}"/>
+                <!--#endregion Player 8 END-->
+                <!--#region Player 9-->
+                <View:PlayerView BotOrHuman="{Binding Player9.BotOrHuman}" 
+                                 HorizontalAlignmentStats="{Binding Player9.HorizontalAlignmentStats}" 
+                                 VerticalAlignmentStats="{Binding Player9.VerticalAlignmentStats}" 
+                                 ShowStatistic="{Binding Player9.ShowStatistic}" 
+                                 RowVisibilityStats="{Binding Player9.RowStats}" 
+                                 ColumnVisibilityStats="{Binding Player9.ColumnStats}" 
+                                 ImageBotHuman="{Binding Player9.BotHumanImg}" 
+                                 RowVisibilityDealer="{Binding Player9.RowDealer}" 
+                                 ColumnVisibilityDealer="{Binding Player9.ColumnDealer}" 
+                                 WidthOfColumn="{Binding Player9.WidthColumn}" 
+                                 TargetNumber="{Binding Player9.Balance}" 
+                                 IsVisibleBool="{Binding Player9.IsVisible, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                                 RowVisibility="{Binding Player9.RowBet}" 
+                                 ColumnVisibility="{Binding Player9.ColumnBet}" 
+                                 NameOfPlayer="{Binding Player9.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                 Balance="{Binding Player9.Balance, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  
+                                 BetSize="{Binding Player9.BetSize}" IsDealer="{Binding Player9.IsDealer}" 
+                                 Cards="{Binding Player9.Cards}" 
+                                 ImageSource1="{Binding Player9.ImageSourceCard1, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                                 ImageSource2="{Binding Player9.ImageSourceCard2, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                                 ImageSource3="{Binding Player9.ImageSourceCard3, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                                 ImageSource4="{Binding Player9.ImageSourceCard4, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                                 DealerVisibility="{Binding Player9.VisibilityDealer}" 
+                                 DoubleClickCommand="{Binding Player9.ShowCardsPlayerClick}" 
+                                 StrategyProfile="{Binding Player9.Strategy, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                 IsMyTurn="{Binding Player9.IsMyTurn, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                 BetSizeVisibility="{Binding Player9.BetVisibility}" 
+                                 VisibilityCardsInView="{Binding Player9.VisibilityForCards, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                 FoldCommand="{Binding Player9.FoldCommandForPlayer}"
+                                 RowVisibilityButton="{Binding Player9.RowButton}" 
+                                 ColumnVisibilityButton="{Binding Player9.ColumnButton}" 
+                                 InGame="{Binding Player9.InGame, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                 Action="{Binding Player9.Action, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                                 IsWinner="{Binding Player9.IsWinner, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                                 VisibilityOmaha="{Binding VisibilityOmaha}"/>
+        <!--#endregion Player 9 END-->
+
+            </StackPanel>
+            <!--Pot View-->
+            <View:PotUC Grid.Row="1" 
+                        Grid.Column="1" 
+                        Margin="0 -60 0 0" 
+                        TargetNumber="{Binding PotSize}"/>
+            <!--Pot View END-->
+            <!--Cards On Table-->
+            <StackPanel Grid.Row="1" 
+                        Grid.Column="1" 
+                        HorizontalAlignment="Center" 
+                        Orientation="Horizontal" 
+                        VerticalAlignment="Center" 
+                        Margin="0 20 0 0">
+                <Image Visibility="{Binding Card1Visibility, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                       Source="{Binding CardOnTable1, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, NotifyOnTargetUpdated=True}" 
+                       Height="50"/>
+                <Image Visibility="{Binding Card2Visibility, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                       Source="{Binding CardOnTable2, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, NotifyOnTargetUpdated=True}" 
+                       Height="50"/>
+                <Image Visibility="{Binding Card3Visibility, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                       Source="{Binding CardOnTable3, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, NotifyOnTargetUpdated=True}" 
+                       Height="50"/>
+                <Image Visibility="{Binding Card4Visibility, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                       Source="{Binding CardOnTable4, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, NotifyOnTargetUpdated=True}" 
+                       Height="50"/>
+                <Image Visibility="{Binding Card5Visibility, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                       Source="{Binding CardOnTable5, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, NotifyOnTargetUpdated=True}" 
+                       Height="50"/>
+            </StackPanel>
+            <!--Cards On Table END-->
+        </Grid>
+    </Grid>
+</Window>

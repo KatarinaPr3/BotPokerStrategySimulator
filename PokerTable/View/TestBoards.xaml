@@ -1,0 +1,292 @@
+﻿<Window x:Class="PokerTable.View.TestBoards"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PokerTable.View"
+        mc:Ignorable="d"
+    Title="TestBoards" Height="900" Width="650">
+    <Window.Resources>
+        <!--#region  Style-->
+        <Style x:Key="Style2"
+       TargetType="{x:Type Button}">
+            <Style.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+            </Style.Resources>
+            <Setter Property="Background" 
+                    Value="white"/>
+            <Setter Property="Foreground" 
+                    Value="Black"/>
+            <Setter Property="BorderBrush" 
+                    Value="DarkGray"/>
+            <Setter Property="BorderThickness" 
+                    Value="3"/>
+            <Setter Property="Margin" 
+                    Value="1"/>
+            <Setter Property="FontSize" 
+                    Value="12"/>
+        </Style>
+        <!--#endregion-->
+    </Window.Resources>
+    <Grid Cursor="{Binding CursorMain, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="4*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Row="0" 
+              Grid.Column="0">
+            <Button Style="{StaticResource Style2}" 
+                    Width="90" 
+                    Height="25" 
+                    Foreground="Black"
+                    Content="Load File" 
+                    Command="{Binding LoadingBoards}"/>
+        </Grid>
+        <Grid Grid.Row="0" 
+              Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Padding="0" 
+                       VerticalAlignment="Center" 
+                       HorizontalAlignment="Center" 
+                       Text="Boards: " 
+                       Grid.Column="0"/>
+            <TextBox VerticalAlignment="Center" 
+                     Grid.Column="1" 
+                     Text="{Binding EnteredCards, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                     Margin="5 10 5 10"/>
+            <Button Style="{StaticResource Style2}" 
+                    HorizontalAlignment="Left" 
+                    Grid.Column="2" 
+                    Width="100" 
+                    Height="25" 
+                    Foreground="Black" 
+                    Content="Process" 
+                    Command="{Binding LoadingBoardsProcess}"/>
+            <Button Style="{StaticResource Style2}" 
+                    HorizontalAlignment="Left" 
+                    Grid.Column="3" 
+                    Width="100" 
+                    Height="25" 
+                    Foreground="Black" 
+                    Content="Process All" 
+                    Command="{Binding LoadingBoardsProcessAll}"/>
+        </Grid>
+        <Grid Grid.Row="1" 
+              Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <DataGrid Margin="5" 
+                      ItemsSource="{Binding TestBoards, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                      AutoGenerateColumns="False" 
+                      CanUserReorderColumns="False" 
+                      CanUserSortColumns="True" 
+                      ScrollViewer.CanContentScroll="True"
+                      Width="auto" PresentationTraceSources.TraceLevel="High" 
+                      SelectedItem="{Binding SelectedBoardRow, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Header="Cards">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel HorizontalAlignment="Center" 
+                                            Orientation="Horizontal">
+                                    <Image Margin="1" 
+                                           Height="25" 
+                                           Source="{Binding Img1}"/>
+                                    <Image Margin="1" 
+                                           Height="25" 
+                                           Source="{Binding Img2}"/>
+                                    <Image Margin="1" 
+                                           Height="25" 
+                                           Source="{Binding Img3}"/>
+                                    <Image Margin="1" 
+                                           Height="25" 
+                                           Source="{Binding Img4}" 
+                                           Visibility="{Binding VisibilityTurn, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                                    <Image Margin="1" 
+                                           Height="25" 
+                                           Source="{Binding Img5}" 
+                                           Visibility="{Binding VisibilityRiver, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <DataGridTemplateColumn CanUserSort="True" 
+                                            SortMemberPath="RaisePercents">
+                        <DataGridTemplateColumn.HeaderTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}},                                       Path=DataContext.BetOrRaiseTxt}" 
+                                           HorizontalAlignment="Center" 
+                                           VerticalAlignment="Center"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.HeaderTemplate>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Padding="2" 
+                                           Text="{Binding Path=RaisePercents, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  
+                                           HorizontalAlignment="Center" 
+                                           VerticalAlignment="Center" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <DataGridTemplateColumn CanUserSort="True" 
+                                            SortMemberPath="CallPercents">
+                        <DataGridTemplateColumn.HeaderTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}},                                       Path=DataContext.CheckOrCallTxt}" 
+                                           HorizontalAlignment="Center" 
+                                           VerticalAlignment="Center"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.HeaderTemplate>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Padding="2" 
+                                           Text="{Binding CallPercents, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                                           HorizontalAlignment="Center" 
+                                           VerticalAlignment="Center"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <DataGridTemplateColumn CanUserSort="True" 
+                                            SortMemberPath="FoldPercents">
+                        <DataGridTemplateColumn.HeaderTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, 
+                                            Path=DataContext.FoldTxt}" 
+                                           HorizontalAlignment="Center" 
+                                           VerticalAlignment="Center"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.HeaderTemplate>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate >
+                                <TextBlock Padding="2" 
+                                           Text="{Binding FoldPercents, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                                           HorizontalAlignment="Center" 
+                                           VerticalAlignment="Center"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                        <DataGridTemplateColumn.CellStyle>
+                            <Style TargetType="{x:Type DataGridCell}">
+                                <Setter Property="Visibility" 
+                                        Value="{Binding DataContext.FoldColumnVisibility, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}"/>
+                            </Style>
+                        </DataGridTemplateColumn.CellStyle>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="100"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid>
+
+                    <TextBlock Text="{Binding AllAverage, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                               VerticalAlignment="Center" 
+                               HorizontalAlignment="Center" 
+                               FontSize="16"/>
+                </Grid>
+                <Grid Grid.Row="1">
+                    <DataGrid  Margin="5" 
+                               Grid.Column="1" 
+                               ItemsSource="{Binding EnumBoardsModel, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                               AutoGenerateColumns="False" 
+                               CanUserReorderColumns="False" 
+                               CanUserSortColumns="True" 
+                               ScrollViewer.CanContentScroll="True" 
+                               Width="auto" PresentationTraceSources.TraceLevel="High" >
+                        <DataGrid.Columns>
+                            <DataGridTemplateColumn Header="Enum Boards">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding EnumBoards, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                                                   HorizontalAlignment="Center" 
+                                                   VerticalAlignment="Center"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+                            <DataGridTemplateColumn CanUserSort="True" 
+                                                    SortMemberPath="RaisePercents">
+                                <DataGridTemplateColumn.HeaderTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}},                               Path=DataContext.BetOrRaiseTxt}" 
+                                                   HorizontalAlignment="Center" 
+                                                   VerticalAlignment="Center"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.HeaderTemplate>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Padding="2" 
+                                                   Text="{Binding Path=RaisePercents, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  
+                                                   HorizontalAlignment="Center" 
+                                                   VerticalAlignment="Center" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+                            <DataGridTemplateColumn CanUserSort="True" 
+                                                    SortMemberPath="CallPercents">
+                                <DataGridTemplateColumn.HeaderTemplate>
+                                    <DataTemplate>
+                                        <TextBlock 
+                                            Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}},                              Path=DataContext.CheckOrCallTxt}" 
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.HeaderTemplate>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Padding="2" 
+                                                   Text="{Binding CallPercents, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                                                   HorizontalAlignment="Center" 
+                                                   VerticalAlignment="Center"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn CanUserSort="True" 
+                                                    SortMemberPath="FoldPercents">
+                                <DataGridTemplateColumn.HeaderTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}},                               Path=DataContext.FoldTxt}" 
+                                                   HorizontalAlignment="Center" 
+                                                   VerticalAlignment="Center"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.HeaderTemplate>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate >
+                                        <TextBlock Padding="2" 
+                                                   Text="{Binding FoldPercents, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                                                   HorizontalAlignment="Center" 
+                                                   VerticalAlignment="Center"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                                <DataGridTemplateColumn.CellStyle>
+                                    <Style TargetType="{x:Type DataGridCell}">
+                                        <Setter Property="Visibility"
+                                                Value="{Binding DataContext.FoldColumnVisibility, RelativeSource={RelativeSource Mode=FindAncestor,                     AncestorType=DataGrid}}"/>
+                                    </Style>
+                                </DataGridTemplateColumn.CellStyle>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

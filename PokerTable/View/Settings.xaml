@@ -1,0 +1,300 @@
+﻿<Window x:Class="PokerTable.View.Settings"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PokerTable.View"
+        mc:Ignorable="d"
+        xmlns:ViewModel="clr-namespace:PokerTable.ViewModel"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        xmlns:View="clr-namespace:PokerTable.View"
+        x:Name="SettingsParent"
+        Title="Settings" SizeToContent="Height" Width="600">
+    <Window.Resources>
+        <!--#region STYLE LISTBOX< LISTBOXITEM & BUTTON-->
+        <Style x:Key="Style1"
+       TargetType="{x:Type ListBox}">
+            <Setter Property="BorderThickness" 
+                    Value="0"/>
+        </Style>
+        <Style x:Key="Style2"
+       TargetType="{x:Type ListBoxItem}">
+            <Style.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" 
+                            Value="5"/>
+                </Style>
+            </Style.Resources>
+            <Setter Property="Background" 
+                    Value="white"/>
+            <Setter Property="BorderBrush" 
+                    Value="DarkGray"/>
+            <Setter Property="BorderThickness" 
+                    Value="3"/>
+            <Setter Property="Margin" 
+                    Value="10 5"/>
+            <Setter Property="Padding" 
+                    Value="10"/>
+            <Setter Property="FontSize" 
+                    Value="16"/>
+        </Style>
+        <Style x:Key="styleCB"
+               TargetType="{x:Type ComboBox}">
+            <Setter Property="Text" 
+                    Value="Select Profile"/>
+            <Setter Property="FontSize" 
+                    Value="14"/>
+        </Style>
+        <Style x:Key="styleButton"
+               TargetType="{x:Type Button}">
+            <Style.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" 
+                            Value="5"/>
+                </Style>
+            </Style.Resources>
+            <Setter Property="Background" 
+                    Value="white"/>
+            <Setter Property="BorderBrush" 
+                    Value="Black"/>
+            <Setter Property="BorderThickness" 
+                    Value="3"/>
+            <Setter Property="Typography.Capitals" 
+                    Value="AllSmallCaps"/>
+        </Style>
+        <!--#endregion-->
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="150"/>
+            <RowDefinition/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="3">
+            <Button Style="{StaticResource styleButton}" 
+                    Width="80" 
+                    Height="30" 
+                    Content="Save"
+                    Command="{Binding SaveDataCommand}"/>
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" 
+                           Grid.Column="0" 
+                           Text="Choose Game " 
+                           FontSize="14" 
+                           Margin="10 0" 
+                           HorizontalAlignment="Left" 
+                           VerticalAlignment="Center"/>
+                <ComboBox Grid.Row="0" 
+                          Grid.Column="1" 
+                          Width="120" 
+                          ItemsSource="{Binding ChooseGame}" 
+                          SelectedValue="{Binding GameChoosen}" 
+                          SelectedItem="{Binding GameChoosen}" 
+                          FontSize="14" HorizontalAlignment="Left" 
+                          VerticalAlignment="Top" 
+                          Margin="0,0,0,0"/>
+                <TextBlock VerticalAlignment="Center" 
+                           Grid.Row="1"
+                           Grid.Column="0"
+                           Text="Show Hands "
+                           FontSize="14" 
+                           Margin="10 0" 
+                           HorizontalAlignment="Left"/>
+                <ComboBox Grid.Row="1" 
+                          Grid.Column="1" 
+                          Width="120" 
+                          ItemsSource="{Binding NumShowHands}" 
+                          SelectedValue="{Binding NumShowHandsChoosen}" 
+                          SelectedItem="{Binding NumShowHandsChoosen}" 
+                          FontSize="14" 
+                          HorizontalAlignment="Left" 
+                          VerticalAlignment="Center"/>
+                <TextBlock VerticalAlignment="Center" 
+                           Grid.Row="2" 
+                           Grid.Column="0" 
+                           Text="BigBlind" 
+                           FontSize="14" 
+                           Margin="10 0" 
+                           HorizontalAlignment="Left"/>
+                <TextBox Grid.Row="2" 
+                         Grid.Column="1" 
+                         Text="{Binding BigBlind, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                         Width="50" 
+                         FontSize="14" 
+                         HorizontalAlignment="Left" 
+                         VerticalAlignment="Center"/>
+                <TextBlock VerticalAlignment="Center" 
+                           Grid.Row="3" 
+                           Grid.Column="0" 
+                           Text="Threshold Rebuy" 
+                           FontSize="14" 
+                           Margin="10 0" 
+                           HorizontalAlignment="Left"/>
+                <TextBox Grid.Row="3" 
+                         Grid.Column="1" 
+                         Text="{Binding ThresholdRebuy, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                         Width="50" 
+                         FontSize="14" 
+                         HorizontalAlignment="Left" 
+                         VerticalAlignment="Center"/>
+            </Grid>
+            <Grid Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <TextBlock VerticalAlignment="Center" 
+                           Grid.Row="0" 
+                           Grid.Column="0" 
+                           Text="Sleep Time" 
+                           FontSize="14" 
+                           Margin="10 0" 
+                           HorizontalAlignment="Left"/>
+                <TextBox Grid.Row="0" 
+                         Grid.Column="1" 
+                         Text="{Binding WaitDecision, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                         Width="50" 
+                         FontSize="14" 
+                         HorizontalAlignment="Left" 
+                         VerticalAlignment="Center"/>
+                <TextBlock VerticalAlignment="Center"
+                           Grid.Row="1" 
+                           Grid.Column="0" 
+                           Text="Sleep Time Hand Finished" 
+                           FontSize="14" 
+                           Margin="10 0" 
+                           HorizontalAlignment="Left"/>
+                <TextBox Grid.Row="1" 
+                         Grid.Column="1" 
+                         Text="{Binding DealingCardsDelay, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                         Width="50" 
+                         FontSize="14" 
+                         HorizontalAlignment="Left" 
+                         VerticalAlignment="Center"/>
+                <TextBlock VerticalAlignment="Center" 
+                           Grid.Row="2" 
+                           Grid.Column="0" 
+                           Text="Generate HH"
+                           FontSize="14" 
+                           Margin="10 0" 
+                           HorizontalAlignment="Left"/>
+                <CheckBox Grid.Row="2" 
+                          Grid.Column="1" 
+                          IsChecked="{Binding IsGeneratedChecked, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                          FontSize="16" 
+                          HorizontalAlignment="Left" 
+                          VerticalAlignment="Center"/>
+                <TextBlock VerticalAlignment="Center" 
+                           Grid.Row="3" 
+                           Grid.Column="0" 
+                           Text="Poker site: " 
+                           FontSize="14" 
+                           Margin="10 0" 
+                           HorizontalAlignment="Left"/>
+                <ComboBox Grid.Row="3" 
+                          Grid.Column="1" 
+                          Width="120" 
+                          ItemsSource="{Binding EnumCasinosCollection}" 
+                          SelectedValue="{Binding SelectedEnumCasino, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                          SelectedItem="{Binding SelectedEnumCasino, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                          FontSize="14" 
+                          HorizontalAlignment="Left" 
+                          VerticalAlignment="Center"/>
+            </Grid>
+        </Grid>
+        <StackPanel Orientation="Horizontal" 
+                    HorizontalAlignment="Center" 
+                    Grid.ColumnSpan="2" 
+                    VerticalAlignment="Center">
+            <TextBlock Text="Number of players " 
+                       FontSize="20" />
+            <ComboBox ItemsSource="{Binding PlayerCount, Mode=TwoWay}" 
+                      SelectedItem="{Binding NumberOfPlayers, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                      Width="100"/>
+        </StackPanel>
+        <ListBox Style="{StaticResource Style1}" 
+                 Grid.Row="2" 
+                 Width="550" 
+                 ItemContainerStyle="{StaticResource Style2}" 
+                 HorizontalAlignment="Center" 
+                 ItemsSource="{Binding PlayersToPlay, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <TextBox VerticalAlignment="Center" 
+                                 Width="150" 
+                                 Grid.Column="0" 
+                                 Text="{Binding Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                                 Background="Transparent">
+                            <TextBox.BorderThickness>
+                                <Thickness Left="0" 
+                                           Right="0" 
+                                           Top="0" 
+                                           Bottom="0"/>
+                            </TextBox.BorderThickness>
+                        </TextBox>
+                        <TextBox VerticalAlignment="Center" 
+                                 Width="100" 
+                                 Grid.Column="1" 
+                                 Text="{Binding Balance,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, StringFormat=#.##}" 
+                                 Background="Transparent">
+                            <TextBox.BorderThickness>
+                                <Thickness Left="0" 
+                                           Right="0" 
+                                           Top="0" 
+                                           Bottom="0"/>
+                            </TextBox.BorderThickness>
+                        </TextBox>
+                        <StackPanel Grid.Column="2" 
+                                    HorizontalAlignment="Right" 
+                                    VerticalAlignment="Center">
+                            <ComboBox Width="150" 
+                                      ItemsSource="{Binding StrategyProfiles}" 
+                                      SelectedValue="{Binding Strategy}" 
+                                      SelectedItem="{Binding Strategy}"/>
+                        </StackPanel>
+                        <Button BorderThickness="0" 
+                                Margin="50 0 0 0" 
+                                Grid.Column="3" 
+                                Width="40" 
+                                Height="40" 
+                                Command="{Binding ShowIconPlayer}">
+                            <StackPanel>
+                                <Image Source="{Binding BotHumanImg}"/>
+                            </StackPanel>
+                        </Button>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Grid>
+</Window>
